@@ -25,6 +25,8 @@ class RpgGame {
     Lucky lucky = Lucky('Jack', 270, 25);
     Witcher witcher = Witcher('Geralt', 300);
     Thor thor = Thor('Thor', 280, 35);
+    //Лудоман
+    Ludoman ludoman = Ludoman("Ludoman", 250, 10);
 
     List<Hero> heroes = [
       warrior1,
@@ -37,6 +39,7 @@ class RpgGame {
       lucky,
       witcher,
       thor,
+      ludoman
     ];
 
     Avrora avrora = Avrora('Aurora', 250, 15);

@@ -2,6 +2,7 @@ import 'game_character.dart';
 import 'super_ability.dart';
 import 'boss.dart';
 import 'rpg_game.dart';
+import 'dart:math';
 
 abstract class Hero extends GameCharacter {
   SuperAbility ability;
@@ -211,5 +212,41 @@ class Bomber extends Hero {
   void die(Boss boss) {
     boss.health -= 100;
     print('Bomber $name exploded and dealt 100 damage to boss!');
+  }
+}
+
+//новые герой Лудоман, который может наносить урон боссу или случайному герою в зависимости от броска кубиков.
+class Ludoman extends Hero {
+  Ludoman(String name, int health, int damage)
+    : super(name, health, damage, SuperAbility.gamble);
+
+  @override
+  void applySuperPower(Boss boss, List<Hero> heroes) {
+    if (heroes.isEmpty) return;
+
+    Random random = Random();
+
+    int dice1 = random.nextInt(6) + 1;
+    int dice2 = random.nextInt(6) + 1;
+
+    print("$name rolled dice: $dice1 and $dice2");
+
+    if (dice1 == dice2) {
+      int damageToBoss = dice1 * dice2;
+      boss.health -= damageToBoss;
+      print("$name deals $damageToBoss damage to the Boss");
+    } else {
+      List<Hero> aliveAllies = heroes
+          .where((h) => h != this && h.health > 0)
+          .toList();
+
+      if (aliveAllies.isEmpty) return;
+
+      Hero randomHero = aliveAllies[random.nextInt(aliveAllies.length)];
+      int damageToHero = dice1 + dice2;
+
+      randomHero.health -= damageToHero;
+      print("$name deals $damageToHero damage to teammate ${randomHero.name}");
+    }
   }
 }

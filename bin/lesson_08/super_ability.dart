@@ -10,4 +10,5 @@ enum SuperAbility {
   avrora,
   tricky,
   bomber,
+  gamble,
 }
